@@ -1,28 +1,20 @@
 import { Scene } from 'phaser';
 
-export class MainMenu extends Scene
-{
-    constructor ()
-    {
-        super('MainMenu');
-    }
+export class MainMenu extends Scene {
+  constructor() {
+    super("MainMenu");
+  }
 
-    create ()
-    {
-        this.add.image(512, 384, 'background');
+  create() {
+    const startButton = this.add
+      .text(400, 300, "Lets start💕", { fontSize: "32px", fill: "#fff"})
+      .setInteractive()
+      .on("pointerdown", () => this.startGame());
+      
+      
+  }
 
-        this.add.image(512, 300, 'logo');
-
-        this.add.text(512, 460, 'Main Menu', {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        }).setOrigin(0.5);
-
-        this.input.once('pointerdown', () => {
-
-            this.scene.start('Game');
-
-        });
-    }
+  startGame() {
+    this.scene.start("Game");
+  }
 }
