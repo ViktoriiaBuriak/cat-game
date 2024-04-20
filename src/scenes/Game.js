@@ -34,17 +34,15 @@ export class Game extends Scene {
     });
 
     this.balls.children.iterate((ball) => {
-       const randomX = Phaser.Math.Between(0, this.physics.world.bounds.width);
-       const randomY = Phaser.Math.Between(0, this.physics.world.bounds.height);
+      const randomX = Phaser.Math.Between(0, this.physics.world.bounds.width);
+      const randomY = Phaser.Math.Between(0, this.physics.world.bounds.height);
 
       ball.setPosition(randomX, randomY);
-      
+
       ball.setCollideWorldBounds(true);
-      ball.setBounce(1); 
+      ball.setBounce(1);
       ball.setVelocity(Phaser.Math.Between(-200, 200), 20);
     });
-
-    
   }
 
   update() {
@@ -63,9 +61,9 @@ export class Game extends Scene {
     }
 
     this.physics.overlap(this.hero, this.balls, this.collectBall, null, this);
-    
+
     this.collectBall = (hero, ball) => {
-       ball.disableBody(true, true);
-    }
+      ball.disableBody(true, true);
+    };
   }
 }
