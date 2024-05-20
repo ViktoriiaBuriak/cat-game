@@ -16,9 +16,10 @@ export class Game extends Scene {
     this.hero = this.physics.add.sprite(400, 400, "hero");
 
     let invisiblePlatform = this.physics.add.staticGroup();
-    this.platform = invisiblePlatform.create(400, 700);
+    this.platform = invisiblePlatform.create(400, 750);
 
-    this.platform.setSize(1200, 50);
+    this.platform.setSize(1200, 20);
+
     this.platform.setAlpha(0);
 
     this.physics.add.collider(this.hero, this.platform);
@@ -43,6 +44,20 @@ export class Game extends Scene {
       ball.setBounce(1);
       ball.setVelocity(Phaser.Math.Between(-200, 200), 20);
     });
+
+    //level
+    this.level = 1;
+    this.levelText = this.add.text(16, 50, "level: " + this.level, {
+      fontSize: "32px",
+      fill: "#000",
+    });
+
+    //Score
+    this.score = 0;
+    this.scoreText = this.add.text(16, 16, "score: 0", {
+      fontSize: "32px",
+      fill: "#000",
+    });
   }
 
   update() {
@@ -64,6 +79,20 @@ export class Game extends Scene {
 
     this.collectBall = (hero, ball) => {
       ball.disableBody(true, true);
+      this.score += 10;
+      this.scoreText.setText("score: " + this.score);
+      if (this.balls.countActive(true) === 0) {
+        this.balls.children.iterate((ball) => {
+          ball.enableBody(true, ball.x, 0, true, true);
+          ball.setVelocity(
+            Phaser.Math.Between(-200, 200),
+            Phaser.Math.Between(-200, 200)
+          );
+        });
+
+        this.level++;
+        this.levelText.setText("level: " + this.level);
+      }
     };
   }
 }
